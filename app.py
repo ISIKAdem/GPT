@@ -3,19 +3,18 @@ import requests
 import datetime
 import bcrypt
 
-# Sayfa ayarları
+# Sayfa başlığı ve ikon ayarı
 st.set_page_config(
     page_title="GPT Erişim Paneli",
     page_icon="🤖",
     layout="centered"
 )
 
-# 📁 Kullanıcı listesini dış dosyadan al
+# ✅ Kullanıcı listesi (şifreler HASH'LENMİŞ olarak sabit)
 USERS = {
-    "isikadem@turkcell.com.tr": "$2b$12$6TGhdU0C/Otxg1Efu23QCOHt0Ue5Wp4sCN12rV0u0kC5HQZ.y6Kj2",
-    "ahmeteren2@turkcell.com.tr": "$2b$12$BNmLdz3ih1o9gfJP0UBkL.yFDcT0ccdcPVg2BTlrz6u08Y7HpX3Pe"
+    "isikadem@turkcell.com.tr": "$2b$12$6TGhdU0C/Otxg1Efu23QCOHt0Ue5Wp4sCN12rV0u0kC5HQZ.y6Kj2",   # sifre123
+    "ahmeteren2@turkcell.com.tr": "$2b$12$BNmLdz3ih1o9gfJP0UBkL.yFDcT0ccdcPVg2BTlrz6u08Y7HpX3Pe"  # Erenlerden2.ci
 }
-
 
 # Oturum kontrolü
 if 'authenticated' not in st.session_state:
