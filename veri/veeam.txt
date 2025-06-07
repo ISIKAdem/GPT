@@ -1,0 +1,18 @@
+Başlık: Veeam Backup CODE53 Hatası
+
+Açıklama:
+Veeam'de alınan CODE53 hatası genellikle repository'e erişim sırasında oluşur. Bu hata şu sebeplerle ortaya çıkabilir:
+
+1. Backup repository sunucusuna bağlantı sağlanamıyor olabilir
+2. Gerekli portlar (örneğin TCP 2500–5000 arası) kapalı olabilir
+3. Depolama dizinine erişim izni yoktur (NTFS izinleri ya da mount problemi)
+4. Repository disk dolu olabilir
+
+Çözüm Adımları:
+- Repository sunucusuna RDP ile bağlanın, disk durumunu kontrol edin
+- Veeam'de repository ayarlarını açarak kullanılabilirliği test edin
+- Gerekirse repository’yi kaldırıp tekrar ekleyin
+- Veeam Service’lerini yeniden başlatın
+
+Not:
+Hata genellikle "No access to repository" gibi ek mesajlarla birlikte gelir.
