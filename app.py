@@ -47,3 +47,15 @@ if st.button("Gönder") and user_input:
             st.markdown(f"**GPT:** {reply}")
         except Exception as e:
             st.error(f"Hata oluştu: {e}")
+
+import datetime
+
+# ... önceki kodlar ...
+
+reply = response.json()["choices"][0]["message"]["content"]
+st.markdown(f"**GPT:** {reply}")
+
+# Log kaydı
+log_entry = f"[{datetime.datetime.now()}] Kullanıcı: {st.session_state.user}\nSoru: {user_input}\nCevap: {reply}\n\n"
+with open("chat_log.txt", "a", encoding="utf-8") as log_file:
+    log_file.write(log_entry)
