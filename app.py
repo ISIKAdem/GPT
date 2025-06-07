@@ -21,7 +21,7 @@ if not st.session_state.authenticated:
             st.session_state.authenticated = True
             st.session_state.user = email
             st.success("Giriş başarılı!")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("Erişim reddedildi.")
     st.stop()
