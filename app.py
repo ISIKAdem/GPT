@@ -64,3 +64,29 @@ if st.button("🚀 Gönder") and user_input:
 
         except Exception as e:
             st.error(f"Hata oluştu: {e}")
+# 🔍 Sohbet geçmişini göster
+if st.button("📄 Sohbet Geçmişini Göster"):
+    try:
+        with open("chat_log.txt", "r", encoding="utf-8") as log_file:
+            lines = log_file.readlines()
+
+        # Giriş yapan kullanıcının satırlarını filtrele
+        user_lines = []
+        include = False
+        for line in lines:
+            if line.startswith("[") and st.session_state.user in line:
+                include = True
+                user_lines.append(line)
+            elif line.startswith("[") and st.session_state.user not in line:
+                include = False
+            elif include:
+                user_lines.append(line)
+
+        if user_lines:
+            st.markdown("### 🗂 Senin Sohbet Kayıtların")
+            st.text("".join(user_lines))
+        else:
+            st.info("Hiç kayıt bulunamadı.")
+
+    except FileNotFoundError:
+        st.warning("Henüz kayıt oluşturulmamış.")
