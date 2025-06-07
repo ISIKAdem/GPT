@@ -2,31 +2,41 @@ import streamlit as st
 import requests
 import datetime
 
-
-# Sayfa başlığı ve görünüm ayarı
+# Sayfa başlığı ve düzeni
 st.set_page_config(
     page_title="GPT Erişim Paneli",
     page_icon="🤖",
     layout="centered"
 )
 
-# 🔐 Kullanıcı listesi (şifre hash'li)
+# 🔐 Kullanıcı listesi (şifreler düz metin)
 USERS = {
     "isikadem@turkcell.com.tr": "sifre123",
     "ahmeteren2@turkcell.com.tr": "Erenlerden2.ci"
 }
 
+# Oturum kontrolü
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = False
 
-# Giriş oturumu kontrolü
-if USERS.get(email) == password:
-    st.session_state.authenticated = True
-    st.session_state.user = email
-    st.success("Giriş başarılı!")
-    st.rerun()
-else:
-    st.error("Erişim reddedildi.")
+# Giriş ekranı
+if not st.session_state.authenticated:
+    st.title("🔐 Giriş Yap")
+    st.markdown("Lütfen e-posta ve şifrenizi girin:")
+    email = st.text_input("📧 E-posta")
+    password = st.text_input("🔑 Şifre", type="password")
 
-# Giriş başarılıysa chat arayüzü
+    if st.button("Giriş"):
+        if USERS.get(email) == password:
+            st.session_state.authenticated = True
+            st.session_state.user = email
+            st.success("Giriş başarılı!")
+            st.rerun()
+        else:
+            st.error("Erişim reddedildi.")
+    st.stop()
+
+# Giriş başarılıysa sohbet ekranı
 st.title("🤖 GPT-4o Sohbet Asistanı")
 st.markdown(f"👋 Hoş geldin, **{st.session_state.user}**!")
 st.markdown("Aşağıya bir soru yaz ve Enter'a bas:")
