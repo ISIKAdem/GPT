@@ -12,31 +12,19 @@ st.set_page_config(
 
 # 🔐 Kullanıcı listesi (şifre hash'li)
 USERS = {
-    "isikadem@turkcell.com.tr": "$2b$12$6TGhdU0C/Otxg1Efu23QCOHt0Ue5Wp4sCN12rV0u0kC5HQZ.y6Kj2",       # sifre123
-    "ahmeteren2@turkcell.com.tr": "$2b$12$BNmLdz3ih1o9gfJP0UBkL.yFDcT0ccdcPVg2BTlrz6u08Y7HpX3Pe"      # Erenlerden2.ci
+    "isikadem@turkcell.com.tr": "sifre123",
+    "ahmeteren2@turkcell.com.tr": "Erenlerden2.ci"
 }
 
+
 # Giriş oturumu kontrolü
-if 'authenticated' not in st.session_state:
-    st.session_state.authenticated = False
-
-# Giriş ekranı
-if not st.session_state.authenticated:
-    st.title("🔐 Giriş Yap")
-    st.markdown("Lütfen e-posta ve şifrenizi girin:")
-    email = st.text_input("📧 E-posta")
-    password = st.text_input("🔑 Şifre", type="password")
-
-    if st.button("Giriş"):
-        hashed = USERS.get(email)
-        if hashed and bcrypt.checkpw(password.encode(), hashed.encode()):
-            st.session_state.authenticated = True
-            st.session_state.user = email
-            st.success("Giriş başarılı!")
-            st.rerun()
-        else:
-            st.error("Erişim reddedildi.")
-    st.stop()
+if USERS.get(email) == password:
+    st.session_state.authenticated = True
+    st.session_state.user = email
+    st.success("Giriş başarılı!")
+    st.rerun()
+else:
+    st.error("Erişim reddedildi.")
 
 # Giriş başarılıysa chat arayüzü
 st.title("🤖 GPT-4o Sohbet Asistanı")
