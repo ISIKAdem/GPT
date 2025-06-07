@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import datetime
 import bcrypt
+import json
 
 # Sayfa ayarları
 st.set_page_config(
@@ -10,10 +11,12 @@ st.set_page_config(
     layout="centered"
 )
 
-# Şifreler hash'li olarak
-USERS = {
-    "isikadem@turkcell.com.tr": bcrypt.hashpw("sifre123".encode(), bcrypt.gensalt()).decode()
-}
+# 📁 Kullanıcı listesini dış dosyadan al
+def load_users():
+    with open("users.json", "r") as f:
+        return json.load(f)
+
+USERS = load_users()
 
 # Oturum kontrolü
 if 'authenticated' not in st.session_state:
@@ -41,7 +44,6 @@ st.title("🤖 GPT-4o Sohbet Asistanı")
 st.markdown(f"👋 Merhaba **{st.session_state.user}**, hoş geldin!")
 st.markdown("Aşağıya sorunu yaz, GPT-4o yanıtlasın:")
 
-# Soru-Cevap alanı
 user_input = st.text_input("💬 Soru", placeholder="Örnek: Yapay zeka nedir?")
 
 if st.button("🚀 Gönder") and user_input:
